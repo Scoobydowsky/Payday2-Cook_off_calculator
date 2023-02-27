@@ -412,6 +412,7 @@ class Calculate{
         this.infamyPool = document.getElementById("infamy-pool-leveling").checked;
         this.riskLevel = document.getElementById('risk-level').value;
         this.perkDeck = document.getElementById('perk-deck-boost').checked;
+        this.teamBoost = document.getElementById('team-boost').value;
 
         //Calculate Reaming XP to 100 lvl
         this.xpTo100 = this.calculateReamingXpToLvl100();
@@ -444,7 +445,7 @@ class Calculate{
         return 1.0;
     }
     oneBagExperience(){
-        let calc = this.levelBonus() * this.riskLevelBonus() *(1 + this.perkDeckBonus());
+        let calc = this.levelBonus() * this.riskLevelBonus() *(1 + this.perkDeckBonus() + this.teamBoostBonus());
 
         return calc;
     }
@@ -466,6 +467,9 @@ class Calculate{
             return 0.45;
         }
         return 0.0;
+    }
+    teamBoostBonus(){
+        return 0.01 * this.teamBoost;
     }
 
 
