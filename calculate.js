@@ -408,6 +408,9 @@ class Calculate{
     constructor() {
         //load data from website inputs
         this.bagExpDef = 8000 ;
+        this.minimalCookOneBagTime = 3;
+        this.optimalCookOneBagTime = 3.5;
+
         this.level = document.getElementById("current-level").value;
         this.infamyPool = document.getElementById("infamy-pool-leveling").checked;
         this.riskLevel = document.getElementById('risk-level').value;
@@ -422,7 +425,7 @@ class Calculate{
         this.xpTo100 = this.calculateReamingXpToLvl100();
         this.xpPerBag = this.oneBagExperience();
         this.bagsTo100 = this.calculateHowManyBagsTo100();
-
+        this.totalCookTimeMinimum();
         this.updatePage();
     }
     updatePage(){
@@ -432,12 +435,14 @@ class Calculate{
         document.getElementById('xp-one-bag').innerHTML = this.xpPerBag.toLocaleString('pl-PL') + ' EXP'
         //printing how many bags are required to 100 lvl
         document.getElementById('no-bags-to-100').innerHTML = this.bagsTo100.toLocaleString('pl-PL');
+        //print minimal cooking time to 100 lvl
+        document.getElementById('minimal-cooking-time').innerHTML = this.totalCookTimeMinimum();
+        document.getElementById('optimal-cooking-time').innerHTML = this.totalCookTimeOptimal();
     }
     calculateReamingXpToLvl100 = () => {
         var findLevel = expArray.find(o=> o.currentLVL === parseInt(this.level));
         var xpRequired = findLevel['xpNeed'];
         let totalXpReq = xpRequired * this.infamyLevelMultiplier(this.infamyPool)
-        console.log('XP to 100: '+ totalXpReq);
 
         return Math.ceil(totalXpReq);
 
@@ -489,6 +494,22 @@ class Calculate{
     }
     stealthBonus(){
         return 1 + (0.01 *  this.stealth);
+    }
+    totalCookTimeMinimum(){
+        let minutes = this.bagsTo100 * this.minimalCookOneBagTime;
+        return this.timeConvert(minutes);
+    }
+    totalCookTimeOptimal(){
+        let minutes = this.bagsTo100 * this.optimalCookOneBagTime;
+        return this.timeConvert(minutes);
+    }
+    timeConvert(time){
+        let hours = Math.floor(time /60);
+        let minutes = time % 60;
+        if(minutes <= 9){
+            return hours+ ":0"+ minutes;
+        }
+        return hours+ ":"+ minutes;
     }
 
 }
