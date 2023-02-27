@@ -432,7 +432,7 @@ class Calculate{
         let totalXpReq = xpRequired * this.infamyLevelMultiplier(this.infamyPool)
         console.log('XP to 100: '+ totalXpReq);
 
-        return totalXpReq;
+        return Math.ceil(totalXpReq);
 
     };
     infamyLevelMultiplier(infamyPool){
