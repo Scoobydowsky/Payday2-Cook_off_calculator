@@ -412,22 +412,44 @@ class Calculate{
         this.infamyPool = document.getElementById("infamy-pool-leveling").checked;
 
         //Calculate Reaming XP to 100 lvl
-        var xpTo100 = this.calculateReamingXpToLvl100();
+        this.xpTo100 = this.calculateReamingXpToLvl100();
+        this.xpPerBag = this.oneBagExperience();
+        this.bagsTo100 = this.calculateHowManyBagsTo100();
+
+        this.updatePage();
+    }
+    updatePage(){
+        //printing xp to 100 lvl
+        document.getElementById('xp-to-100-lvl').innerHTML = this.xpTo100.toLocaleString('pl-PL') + " EXP";
+        //printing how many xp per one bag
+        document.getElementById('xp-one-bag').innerHTML = this.xpPerBag.toLocaleString('pl-PL') + ' EXP'
+        //printing how many bags are required to 100 lvl
+        document.getElementById('no-bags-to-100').innerHTML = this.bagsTo100.toLocaleString('pl-PL');
     }
     calculateReamingXpToLvl100 = () => {
         var findLevel = expArray.find(o=> o.currentLVL === parseInt(this.level));
         var xpRequired = findLevel['xpNeed'];
-        let totalXpReq = xpRequired * this.InfamyLevelMultiplier(this.infamyPool)
+        let totalXpReq = xpRequired * this.infamyLevelMultiplier(this.infamyPool)
         console.log('XP to 100: '+ totalXpReq);
 
-        return document.getElementById('xp-to-100-lvl').innerHTML = totalXpReq.toLocaleString('pl-PL') + " EXP";
+        return totalXpReq;
 
     };
-    InfamyLevelMultiplier(infamyPool){
+    infamyLevelMultiplier(infamyPool){
         if(infamyPool){
             return 1.3 ;
         }
         return 1.0;
     }
-    
+    oneBagExperience(){
+        let calc = this.bagExpDef;
+
+        return calc;
+    }
+    calculateHowManyBagsTo100(){
+
+        return Math.ceil(this.xpTo100 / this.xpPerBag) ;
+    }
+
+
 }
