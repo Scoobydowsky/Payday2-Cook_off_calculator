@@ -415,6 +415,8 @@ class Calculate{
         this.teamBoost = document.getElementById('team-boost').value;
         this.infamyLevel= document.getElementById('infamy-level').value;
         this.gageModPackages = document.getElementById('gage-mod-packages').checked;
+        this.crewMembersAlive = document.getElementById('crew-members-alive').value;
+        this.stealth = document.getElementById('stealth').value;
 
         //Calculate Reaming XP to 100 lvl
         this.xpTo100 = this.calculateReamingXpToLvl100();
@@ -447,9 +449,9 @@ class Calculate{
         return 1.0;
     }
     oneBagExperience(){
-        let calc = this.levelBonus() * this.riskLevelBonus() *(1 + this.perkDeckBonus() + this.teamBoostBonus() + this.infamyBoost() + this.gageModPackagesBoost() );
+        let calc = this.levelBonus() * this.riskLevelBonus() *(1 + this.perkDeckBonus() + this.teamBoostBonus() + this.infamyBoost() + this.gageModPackagesBoost() + this.crewMembersAliveBonus())* this.stealthBonus();
 
-        return calc;
+        return Math.ceil(calc);
     }
     calculateHowManyBagsTo100(){
 
@@ -482,6 +484,11 @@ class Calculate{
         }
         return 0.0;
     }
-
+    crewMembersAliveBonus(){
+       return 0.1 * this.crewMembersAlive;
+    }
+    stealthBonus(){
+        return 1 + (0.01 *  this.stealth);
+    }
 
 }
