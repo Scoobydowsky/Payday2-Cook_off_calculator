@@ -507,9 +507,9 @@ class Calculate{
         let hours = Math.floor(time /60);
         let minutes = time % 60;
         if(minutes <= 9){
-            return hours+ ":0"+ minutes;
+            return hours+ ":0"+ minutes +"(HH:MM)";
         }
-        return hours+ ":"+ minutes;
+        return hours+ ":"+ minutes + "(HH:MM)";
     }
 
 }
